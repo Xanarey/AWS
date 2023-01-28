@@ -1,0 +1,16 @@
+version: '3'
+
+services:
+  mysql:
+    image: 'mysql:8.0'
+    container_name: 'java-mysql'
+    environment:
+      - 'MYSQL_ROOT_PASSWORD=root'
+      - 'MYSQL_ALLOW_EMPTY_PASSWORD=password'
+      - 'MYSQL_DB=jwtapp_db'
+
+  app:
+    build: ./
+    container_name: 'java-app'
+    ports:
+      - 9874:9874
