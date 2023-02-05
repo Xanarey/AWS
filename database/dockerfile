@@ -1,0 +1,6 @@
+
+FROM mysql:8
+
+ENV MYSQL_DATABASE jwtapp_db
+
+COPY ./scripts/* /docker-entrypoint-initdb.d/

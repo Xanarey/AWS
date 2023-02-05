@@ -5,7 +5,7 @@ import com.timur.AWS.service.FileService;
 import com.timur.AWS.service.S3Service;
 import com.timur.AWS.service.UserService;
 import com.timur.AWS.utils.FileHelper;
-import com.timur.AWS.utils.ReadFile;
+import com.timur.AWS.utils.ConvertMultipart;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -78,8 +78,6 @@ public class FileRestControllerV1 {
         if (files == null)
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
 
-
-
         for (com.timur.AWS.model.File f: files)
             if (f.getId().equals(id))
                 this.fileService.delete(f);
@@ -91,8 +89,9 @@ public class FileRestControllerV1 {
     @PreAuthorize("hasAuthority('files:upload')")
     public ResponseEntity<String> uploadFile(@RequestPart(value = "file") MultipartFile multipartFile) {
         try {
-            File file = ReadFile.convertMultiPartToFile(multipartFile);
+            File file = ConvertMultipart.convertMultiPartToFile(multipartFile);
             String fileName = multipartFile.getOriginalFilename();
+
             service.uploadFile(file, fileName);
 
             FileHelper.updateFileInfoInDB(fileName, userService);

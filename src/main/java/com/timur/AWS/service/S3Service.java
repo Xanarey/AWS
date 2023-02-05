@@ -3,6 +3,7 @@ package com.timur.AWS.service;
 import com.amazonaws.services.s3.AmazonS3;
 import com.amazonaws.services.s3.model.*;
 import com.timur.AWS.security.UserDetailsServiceImpl;
+import com.timur.AWS.utils.FileHelper;
 import lombok.RequiredArgsConstructor;
 import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
@@ -20,9 +21,7 @@ public class S3Service {
 
     private final AmazonS3 s3client;
     private final String BUCKET_NAME = "timur.bucket";
-
-    private final FileService fileService;
-    private final UserDetailsServiceImpl userDetailsService;
+    private final UserService userService;
 
     public void createBucket() {
 
@@ -61,6 +60,7 @@ public class S3Service {
 
     public void deleteFile(String filename) {
         s3client.deleteObject(BUCKET_NAME,filename);
+        
         log.info("File: {} ", filename + " - is deleted");
     }
 
@@ -69,6 +69,8 @@ public class S3Service {
         s3client.putObject(
                 new PutObjectRequest(BUCKET_NAME, fileName, file).withCannedAcl(CannedAccessControlList.PublicReadWrite)
         );
+        FileHelper.updateFileInfoInDB(fileName, userService);
+
         log.info("File: {} ", fileName + " - is upload");
 
         return "Uploading Successfully -> ";
