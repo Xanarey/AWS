@@ -10,7 +10,7 @@ import lombok.ToString;
 public class File{
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(generator = "increment")
     private Long id;
 
     @Column(name = "name")

@@ -53,7 +53,7 @@ public class S3Service {
     public void downloadFile(String filename) {
         S3Object s3object = s3client.getObject(BUCKET_NAME, filename);
         S3ObjectInputStream inputStream = s3object.getObjectContent();
-        File file = new File("C:/Users/Пользователь/Desktop/" + filename);
+        File file = new File("download/" + filename);
         FileCopyUtils.copy(inputStream, new FileOutputStream(file));
         log.info("File: {} ", filename + " - is download");
     }
@@ -69,8 +69,6 @@ public class S3Service {
         s3client.putObject(
                 new PutObjectRequest(BUCKET_NAME, fileName, file).withCannedAcl(CannedAccessControlList.PublicReadWrite)
         );
-        FileHelper.updateFileInfoInDB(fileName, userService);
-
         log.info("File: {} ", fileName + " - is upload");
 
         return "Uploading Successfully -> ";

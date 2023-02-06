@@ -13,6 +13,7 @@ public class FileHelper {
 
     public static void updateFileInfoInDB(String fileName, UserService userService) {
         com.timur.AWS.model.File file = new com.timur.AWS.model.File();
+
         file.setName(fileName);
         file.setStatus(Status.ACTIVE);
 
