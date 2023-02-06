@@ -2,6 +2,7 @@ package com.timur.AWS.rest;
 
 import com.timur.AWS.dto.FileDto;
 import com.timur.AWS.model.File;
+import com.timur.AWS.model.Role;
 import com.timur.AWS.service.FileService;
 import com.timur.AWS.service.S3Service;
 import com.timur.AWS.service.UserService;
@@ -42,7 +43,16 @@ public class FileRestControllerV1 {
     @GetMapping(value = "", produces = MediaType.APPLICATION_JSON_VALUE)
     @PreAuthorize("hasAuthority('files:readAll')")
     public ResponseEntity<List<FileDto>> getAllFiles() {
-        List<File> files = fileService.readAllFiles();
+        List<File> files = new ArrayList<>();
+        List<File> allFiles = fileService.readAllFiles();
+
+        if (FileHelper.getUser().getRole() == Role.USER) {
+            for (File f: allFiles)
+                if (Objects.equals(f.getEvent().getUser().getId(), FileHelper.getUser().getId()))
+                    files.add(f);
+        } else {
+            files = allFiles;
+        }
 
         if (files.isEmpty())
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
@@ -69,7 +79,7 @@ public class FileRestControllerV1 {
         String name = "";
 
         for (File f: files)
-            if (f.getId() == id)
+            if (Objects.equals(f.getId(), id))
                 name = f.getName();
 
         service.downloadFile(name);

@@ -9,7 +9,7 @@ import org.joda.time.LocalDateTime;
 public class FileHelper {
 
     private static User userID;
-    private static String time = String.valueOf(LocalDateTime.now());
+    private static final String time = String.valueOf(LocalDateTime.now());
 
     public static void updateFileInfoInDB(String fileName, UserService userService) {
         com.timur.AWS.model.File file = new com.timur.AWS.model.File();

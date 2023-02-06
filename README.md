@@ -63,6 +63,7 @@ POST:   http://localhost:8080/api/v1/files/
 DEL:    http://localhost:8080/api/v1/files/5
 
     Events:
+    
 GET:    http://localhost:8080/api/v1/events/
 DEL:    http://localhost:8080/api/v1/events/5
 POST:   http://localhost:8080/api/v1/events/
