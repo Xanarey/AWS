@@ -1,6 +1,7 @@
 package com.timur.AWS.rest;
 
 import com.timur.AWS.dto.UserDto;
+import com.timur.AWS.model.Event;
 import com.timur.AWS.model.Status;
 import com.timur.AWS.model.User;
 import com.timur.AWS.service.UserService;
@@ -111,8 +112,28 @@ public class UserRestControllerV1 {
 
         if (user == null)
             return new ResponseEntity<>(HttpStatus.NO_CONTENT);
-        user.setStatus(Status.NOT_ACTIVE);
         this.userService.delete(user);
+
+        return new ResponseEntity<>(UserDto.fromUser(user), HttpStatus.OK);
+    }
+
+    @PatchMapping(value = "{id}", produces = MediaType.APPLICATION_JSON_VALUE)
+    @PreAuthorize("hasAuthority('developers:deleteNotActive')")
+    public ResponseEntity<UserDto> deleteUserNotActive(@PathVariable @Validated Long id) {
+        if (id == null)
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+
+        User user = userService.getById(id);
+
+        if (user == null)
+            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+        user.setStatus(Status.NOT_ACTIVE);
+        for (Event e: user.getEvents()) {
+            e.setStatus(Status.NOT_ACTIVE);
+            e.getFile().setStatus(Status.NOT_ACTIVE);
+        }
+
+        this.userService.update(user);
 
         return new ResponseEntity<>(UserDto.fromUser(user), HttpStatus.OK);
     }

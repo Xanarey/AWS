@@ -2,8 +2,6 @@ package com.timur.AWS.service;
 
 import com.amazonaws.services.s3.AmazonS3;
 import com.amazonaws.services.s3.model.*;
-import com.timur.AWS.security.UserDetailsServiceImpl;
-import com.timur.AWS.utils.FileHelper;
 import lombok.RequiredArgsConstructor;
 import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;

@@ -2,8 +2,9 @@ package com.timur.AWS.rest;
 
 import com.timur.AWS.dto.EventDto;
 import com.timur.AWS.model.Event;
-import com.timur.AWS.model.Status;
+import com.timur.AWS.model.User;
 import com.timur.AWS.service.EventService;
+import com.timur.AWS.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
@@ -21,10 +22,12 @@ import java.util.List;
 public class EventRestControllerV1 {
 
     private final EventService eventService;
+    private final UserService userService;
 
     @Autowired
-    public EventRestControllerV1(EventService eventService) {
+    public EventRestControllerV1(EventService eventService, UserService userService) {
         this.eventService = eventService;
+        this.userService = userService;
     }
 
     @PostMapping(value = "", produces = MediaType.APPLICATION_JSON_VALUE)
@@ -34,7 +37,9 @@ public class EventRestControllerV1 {
         if(event == null)
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
 
-        event.setStatus(Status.ACTIVE);
+        User user = userService.getById(event.getUser().getId());
+        event.setUser(user);
+
         this.eventService.create(event);
 
         return new ResponseEntity<>(EventDto.fromEvent(event), headers, HttpStatus.CREATED);
