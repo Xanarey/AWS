@@ -56,10 +56,11 @@ GET:    http://localhost:8080/api/v1/files/
 
     DOWNLOAD
 GET:    http://localhost:8080/api/v1/files/5
-DEL:    http://localhost:8080/api/v1/files/5
     UPLOAD
 POST:   http://localhost:8080/api/v1/files/
 [POSTMAN: Body, form-data, VALUE: path.../, KEY: file]
+
+DEL:    http://localhost:8080/api/v1/files/5
 
     Events:
 GET:    http://localhost:8080/api/v1/events/
