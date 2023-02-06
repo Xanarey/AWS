@@ -20,47 +20,68 @@ Amazon Simple Storage Service (Amazon S3) is an object storage service that offe
 Here is an example:
 
 ```cucumber
+Authorization - BasicAuth
+
 	User:
-update:
-{
-     "id": 12,
-     "username": "Angel"
-}
-create:
+	
+GET:        http://localhost:8080/api/v1/users/
+POST:       http://localhost:8080/api/v1/users/
+[POSTMAN: Body, raw, JSON]
 {
     "status": "ACTIVE",
-    "username": "TomEXP",
-    "firstName": "Tom",
-    "lastName": "Zakker",
-    "email": "tomEXP90@gmail.com",
-    "password": "$2b$12$QsrpXXXXXXXXXXXXXXXXn1NvlTbFNrMBeCec.n/Mh9f.esssz8q",
-    "role": "ADMIN"
+    "username": "New",
+    "firstName": "nosdfsdfviu",
+    "lastName": "userok",
+    "email": "userity.com44444444444",
+    "password": "$2b$10$nVj6KAxKUPyxVtN5Yug8NOC.sHlzjWmJFBYKRvhWksbffsyncVAbq",
+    "role": "USER"
 }
-	Event:
-create:
+PUT:        http://localhost:8080/api/v1/users/
+{
+    "id": "6",
+    "username": "Old",
+    "firstName": "nosdfsdfviu",
+    "lastName": "user",
+    "email": "userity.com44444444444",
+    "password": "$2b$10$nVj6KAxKUPyxVtN5Yug8NOC.sHlzjWmJFBYKRvhWksbffsyncVAbq",
+    "role": "USER"
+}
+PATCH:       http://localhost:8080/api/v1/users/6
+DEL:      http://localhost:8080/api/v1/users/7
+
+    Files:
+    
+    Get records
+GET:    http://localhost:8080/api/v1/files/
+
+    DOWNLOAD
+GET:    http://localhost:8080/api/v1/files/5
+DEL:    http://localhost:8080/api/v1/files/5
+    UPLOAD
+POST:   http://localhost:8080/api/v1/files/
+[POSTMAN: Body, form-data, VALUE: path.../, KEY: file]
+
+    Events:
+GET:    http://localhost:8080/api/v1/events/
+DEL:    http://localhost:8080/api/v1/events/5
+POST:   http://localhost:8080/api/v1/events/
 {
     "created": "2029-01-19 17:06:56",
     "updated": "2029-01-19 17:06:56",
+    "status": "ACTIVE",
     "user": 
     {
-        "id": 3,
-        "username": "Boris",
-        "firstName": "Borya",
-        "lastName": "Borievych",
-        "email": "boris@gmail.com",
-        "status": "ACTIVE",
-        "roleName": "USER"
+        "id": 3
     },
     "file":     
     {
-        "id": 11,
-        "name": "3.1.xlsx",
+        "name": "UwUwUAdmin.rar",
         "status": "ACTIVE"
     }
 }
-update:
+PUT:    http://localhost:8080/api/v1/events/
     {
-        "id": 8,
+        "id": 5,
         "created": "2022-01-19 17:06:56",
-        "updated": "2022-01-19 17:06:56"
+        "updated": "2023-02-06 17:06:56"
     }
