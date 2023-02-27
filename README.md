@@ -33,7 +33,33 @@ Pre settings:
 Here is an example:
 
 ```cucumber
-Authorization - BasicAuth
+
+Register
+http://localhost:8080/api/v1/auth/register
+
+{
+    "username": "Tom",
+    "firstName": "Tomas",
+    "lastName": "Anderson",
+    "email": "tom.dev@gmail.com",
+    "password": "$2b$10$nVj6KAxKUPyxVtN5Yug8NOC.sHlzjWmJFBYKRvhWksbffsyncVAbq",
+    "role": "ADMIN"
+}
+
+{
+    "username": "Tom",
+    "token": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJCb3JpcyIsInJ
+    vbGUiOlsiRklMRVNfVVBEQVRFIiwiRklMRVNfUkVBRF9BTEwiLCJFV
+    kVOVFNfUkVBRF9BTEwiLCJGSUxFU19VUExPQUQiLCJGSUxFU19ERUx
+    FVEUiLCJGSUxFU19ET1dOTE9BRCJdLCJpYXQiOjE2Nzc0OTc2MTMsI
+    mV4cCI6MTY3NzUwMTIxM30.l2qna-Ys6RgOoBfLKrwBhXbPcmB2rqS
+    Mml-BpIzNh28"
+}
+
+Set the returned token to the header
+   POSTMAN
+   Header
+Authorization     Bearer_  <- "your token"
 
 	User:
 	
@@ -42,20 +68,20 @@ POST:       http://localhost:8080/api/v1/users/
 [POSTMAN: Body, raw, JSON]
 {
     "status": "ACTIVE",
-    "username": "New",
-    "firstName": "nosdfsdfviu",
-    "lastName": "userok",
-    "email": "userity.com44444444444",
+    "username": "Anna",
+    "firstName": "Anna",
+    "lastName": "Chikson",
+    "email": "ann.hr@gmail.com",
     "password": "$2b$10$nVj6KAxKUPyxVtN5Yug8NOC.sHlzjWmJFBYKRvhWksbffsyncVAbq",
-    "role": "USER"
+    "role": "MODERATOR"
 }
 PUT:        http://localhost:8080/api/v1/users/
 {
     "id": "6",
     "username": "Old",
-    "firstName": "nosdfsdfviu",
-    "lastName": "user",
-    "email": "userity.com44444444444",
+    "firstName": "OldUser",
+    "lastName": "Old",
+    "email": "old.user.@gmail.com",
     "password": "$2b$10$nVj6KAxKUPyxVtN5Yug8NOC.sHlzjWmJFBYKRvhWksbffsyncVAbq",
     "role": "USER"
 }
@@ -81,8 +107,8 @@ GET:    http://localhost:8080/api/v1/events/
 DEL:    http://localhost:8080/api/v1/events/5
 POST:   http://localhost:8080/api/v1/events/
 {
-    "created": "2029-01-19 17:06:56",
-    "updated": "2029-01-19 17:06:56",
+    "created": "2023-01-19 17:06:56",
+    "updated": "2023-01-19 17:06:56",
     "status": "ACTIVE",
     "user": 
     {
@@ -90,7 +116,7 @@ POST:   http://localhost:8080/api/v1/events/
     },
     "file":     
     {
-        "name": "UwUwUAdmin.rar",
+        "name": "Config.rar",
         "status": "ACTIVE"
     }
 }
