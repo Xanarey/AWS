@@ -5,6 +5,7 @@ import com.timur.AWS.model.Event;
 import com.timur.AWS.model.Status;
 import com.timur.AWS.model.User;
 import com.timur.AWS.service.UserService;
+import com.timur.AWS.utils.EntityHelper;
 import org.joda.time.LocalDateTime;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
@@ -27,20 +28,6 @@ public class UserRestControllerV1 {
     @Autowired
     public UserRestControllerV1(UserService userService) {
         this.userService = userService;
-    }
-
-    @PostMapping(value = "", produces = MediaType.APPLICATION_JSON_VALUE)
-    @PreAuthorize("hasAuthority('developers:register')")
-    public ResponseEntity<UserDto> registerUser(@RequestBody @Validated User user) {
-        HttpHeaders headers = new HttpHeaders();
-        if(user == null)
-            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
-        String time = String.valueOf(LocalDateTime.now());
-        user.setCreated(time);
-        user.setUpdated(time);
-        this.userService.save(user);
-
-        return new ResponseEntity<>(UserDto.fromUser(user), headers, HttpStatus.CREATED);
     }
 
     @GetMapping(value = "{id}", produces = MediaType.APPLICATION_JSON_VALUE)
@@ -80,27 +67,12 @@ public class UserRestControllerV1 {
         if (user == null)
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
 
-        User result = userService.getById(user.getId());
-
-        if (user.getUsername() != null)
-            result.setUsername(user.getUsername());
-        if (user.getFirstName() != null)
-            result.setFirstName(user.getFirstName());
-        if (user.getLastName() != null)
-            result.setLastName(user.getLastName());
-        if (user.getEmail() != null)
-            result.setEmail(user.getEmail());
-        if (user.getStatus() != null)
-            result.setStatus(user.getStatus());
-        if (user.getRole() != null)
-            result.setRole(user.getRole());
-
-        String time = String.valueOf(LocalDateTime.now());
-        result.setUpdated(time);
-        this.userService.update(result);
+        User result = EntityHelper.getUser(user, userService);
 
         return new ResponseEntity<>(UserDto.fromUser(result), headers, HttpStatus.OK);
     }
+
+
 
     @DeleteMapping(value = "{id}", produces = MediaType.APPLICATION_JSON_VALUE)
     @PreAuthorize("hasAuthority('developers:delete')")

@@ -2,9 +2,9 @@ package com.timur.AWS.rest;
 
 import com.timur.AWS.dto.EventDto;
 import com.timur.AWS.model.Event;
-import com.timur.AWS.model.User;
 import com.timur.AWS.service.EventService;
 import com.timur.AWS.service.UserService;
+import com.timur.AWS.utils.EntityHelper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
@@ -36,10 +36,6 @@ public class EventRestControllerV1 {
         HttpHeaders headers = new HttpHeaders();
         if(event == null)
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
-
-        User user = userService.getById(event.getUser().getId());
-        event.setUser(user);
-
         this.eventService.create(event);
 
         return new ResponseEntity<>(EventDto.fromEvent(event), headers, HttpStatus.CREATED);
@@ -68,7 +64,6 @@ public class EventRestControllerV1 {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
 
         Event event = this.eventService.getById(id);
-
         if (event == null)
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
 
@@ -82,26 +77,13 @@ public class EventRestControllerV1 {
         if (event == null)
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
 
-        Event result = new Event();
-
-        if (event.getId() != null)
-            result = this.eventService.getById(event.getId());
-
-        if (event.getFile() != null)
-            result.setFile(event.getFile());
-        if (event.getUser() != null)
-            result.setUser(event.getUser());
-        if (event.getCreated() != null)
-            result.setCreated(event.getCreated());
-        if (event.getUpdated() != null)
-            result.setUpdated(event.getUpdated());
-        if (event.getStatus() != null)
-            result.setStatus(event.getStatus());
-
+        Event result = EntityHelper.getEvent(event, eventService);
         this.eventService.update(result);
 
         EventDto eventDto = EventDto.fromEvent(result);
 
         return new ResponseEntity<>(eventDto, HttpStatus.OK);
     }
+
+
 }

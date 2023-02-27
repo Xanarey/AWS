@@ -22,7 +22,7 @@ class EventServiceImplTest {
 
     public EventServiceImplTest() {
         MockitoAnnotations.openMocks(this);
-        this.eventService = new EventServiceImpl(eventRepository);
+        this.eventService = new EventServiceImpl(eventRepository, userService);
     }
 
     @Test
