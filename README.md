@@ -1,10 +1,14 @@
-Amazon Simple Storage Service (Amazon S3) is an object storage service that offers industry-leading scalability, data availability, security, and performance.
+JWT - JSON Web Tokens are an open, industry standard RFC 7519 method for representing claims securely between two parties.
+
+AWS - Amazon Web Services,  S3 - Amazon Simple Storage Service (Amazon S3) is an object storage service that offers industry-leading scalability, data availability, security, and performance.
+
 
 <table>
 <tr>
   <th>Applied technologies:</th>
   <td>
-      <a href="#java">Java 17</a> 
+    |  <a href="#java">Java 17</a> 
+    |  <a href="#JWT">JWT</a> 
     | <a href="#maven">Maven</a>
     | <a href="#MySQL">MySQL</a>
     | <a href="#Spring">Spring  (IoC, Data, Security)</a>
