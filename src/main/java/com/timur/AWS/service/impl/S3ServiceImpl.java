@@ -1,7 +1,8 @@
-package com.timur.AWS.service;
+package com.timur.AWS.service.impl;
 
 import com.amazonaws.services.s3.AmazonS3;
 import com.amazonaws.services.s3.model.*;
+import com.timur.AWS.service.UserService;
 import lombok.RequiredArgsConstructor;
 import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
@@ -15,7 +16,7 @@ import java.util.*;
 @Slf4j
 @Service
 @RequiredArgsConstructor
-public class S3Service {
+public final class S3ServiceImpl implements S3Service {
 
     private final AmazonS3 s3client;
     private final String BUCKET_NAME = "timur.bucket";

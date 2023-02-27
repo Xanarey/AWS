@@ -3,7 +3,7 @@ package com.timur.AWS.rest;
 import com.timur.AWS.dto.FileDto;
 import com.timur.AWS.model.File;
 import com.timur.AWS.service.FileService;
-import com.timur.AWS.service.S3Service;
+import com.timur.AWS.service.impl.S3ServiceImpl;
 import com.timur.AWS.service.UserService;
 import com.timur.AWS.utils.FileHelper;
 import com.timur.AWS.utils.ConvertMultipart;
@@ -25,12 +25,12 @@ import java.util.Objects;
 @RequestMapping("/api/v1/files/")
 public class FileRestControllerV1 {
 
-    private final S3Service service;
+    private final S3ServiceImpl service;
     private final UserService userService;
     private final FileService fileService;
 
     @Autowired
-    public FileRestControllerV1(S3Service service, UserService userService, FileService fileService) {
+    public FileRestControllerV1(S3ServiceImpl service, UserService userService, FileService fileService) {
         this.service = service;
         this.userService = userService;
         this.fileService = fileService;
