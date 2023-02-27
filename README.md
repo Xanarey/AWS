@@ -20,6 +20,13 @@ AWS - Amazon Web Services,  S3 - Amazon Simple Storage Service (Amazon S3) is an
 </tr>
 </table>
 
+Pre settings:
+1) IDEA: Run, Edit Configurations, Modify options, Add VM options:
+-DMYSQL_USER=root
+   -DMYSQL_PASSWORD=password
+   -DMYSQL_PORT=3307
+2) 
+
 #### JSON Function Data Source
 Here is an example:
 

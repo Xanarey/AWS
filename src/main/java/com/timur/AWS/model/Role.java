@@ -27,8 +27,7 @@ public enum Role {
             Permission.FILES_DELETE)),
 
     MODERATOR(Set.of(
-            Permission.DEVELOPERS_READ_ALL,
-            Permission.DEVELOPERS_DELETE_NOT_ACTIVE,
+            Permission.DEVELOPERS_READ,
 
             Permission.EVENTS_READ_ALL,
             Permission.EVENTS_UPDATE,

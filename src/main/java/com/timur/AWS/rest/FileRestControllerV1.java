@@ -2,7 +2,6 @@ package com.timur.AWS.rest;
 
 import com.timur.AWS.dto.FileDto;
 import com.timur.AWS.model.File;
-import com.timur.AWS.model.Role;
 import com.timur.AWS.service.FileService;
 import com.timur.AWS.service.S3Service;
 import com.timur.AWS.service.UserService;
@@ -31,8 +30,6 @@ public class FileRestControllerV1 {
     private final UserService userService;
     private final FileService fileService;
 
-    private static String time = String.valueOf(LocalDateTime.now());
-
     @Autowired
     public FileRestControllerV1(S3Service service, UserService userService, FileService fileService) {
         this.service = service;
@@ -43,23 +40,11 @@ public class FileRestControllerV1 {
     @GetMapping(value = "", produces = MediaType.APPLICATION_JSON_VALUE)
     @PreAuthorize("hasAuthority('files:readAll')")
     public ResponseEntity<List<FileDto>> getAllFiles() {
-        List<File> files = new ArrayList<>();
         List<File> allFiles = fileService.readAllFiles();
-
-        if (FileHelper.getUser().getRole() == Role.USER) {
-            for (File f: allFiles)
-                if (Objects.equals(f.getEvent().getUser().getId(), FileHelper.getUser().getId()))
-                    files.add(f);
-        } else {
-            files = allFiles;
-        }
-
-        if (files.isEmpty())
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
 
         List<FileDto> fileDtos = new ArrayList<>();
 
-        for (File f: files)
+        for (File f: allFiles)
             fileDtos.add(FileDto.fromFile(f));
 
         return new ResponseEntity<>(fileDtos, HttpStatus.OK);
@@ -99,7 +84,7 @@ public class FileRestControllerV1 {
         if (id > files.get(files.size() - 1).getId())
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
 
-        String name = "";
+        String name;
 
         for (File f: files)
             if (Objects.equals(f.getId(), id)) {
