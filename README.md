@@ -25,7 +25,9 @@ Pre settings:
 -DMYSQL_USER=root
    -DMYSQL_PASSWORD=password
    -DMYSQL_PORT=3307
-2) 
+2) IDEA: Run, Edit Configurations, Modify options, Environment variables:
+-'aws access key'
+-'aws secret key'
 
 #### JSON Function Data Source
 Here is an example:
