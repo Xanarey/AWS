@@ -1,20 +1,24 @@
 package com.timur.AWS.rest;
 
 import com.timur.AWS.dto.AuthRequest;
+import com.timur.AWS.dto.UserDto;
 import com.timur.AWS.model.User;
 import com.timur.AWS.security.JwtTokenProvider;
 import com.timur.AWS.service.UserService;
+import org.joda.time.LocalDateTime;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.validation.annotation.Validated;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -34,7 +38,17 @@ public class AuthenticationRestControllerV1 {
         this.userService = userService;
     }
 
-    @PostMapping("login")
+    @PostMapping(value = "register", produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<?> register(@RequestBody @Validated User user) {
+        HttpHeaders headers = new HttpHeaders();
+        if (user == null)
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+
+        userService.save(user);
+        return new ResponseEntity<>(headers, HttpStatus.CREATED);
+    }
+
+    @PostMapping(value = "login", produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<?> login(@RequestBody AuthRequest requestDto) {
         try {
             String username = requestDto.getUsername();

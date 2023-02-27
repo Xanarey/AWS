@@ -13,10 +13,10 @@ import org.springframework.context.annotation.Configuration;
 @Configuration
 public class S3Config {
 
-    @Value("${aws.key1}")
+    @Value("${aws.access.key}")
     private String aws1;
 
-    @Value("${aws.key2}")
+    @Value("${aws.secret.key}")
     private String aws2;
 
     @Bean
