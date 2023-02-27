@@ -42,7 +42,7 @@ http://localhost:8080/api/v1/auth/register
     "firstName": "Tomas",
     "lastName": "Anderson",
     "email": "tom.dev@gmail.com",
-    "password": "$2b$10$nVj6KAxKUPyxVtN5Yug8NOC.sHlzjWmJFBYKRvhWksbffsyncVAbq",
+    "password": "password",
     "role": "ADMIN"
 }
 
