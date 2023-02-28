@@ -47,7 +47,7 @@ public class JwtTokenProvider {
     public String createToken(String username, Role role) {
 
         Claims claims = Jwts.claims().setSubject(username);
-        claims.put("role", getRoleNames(role)); // TODO ОБЯЗАТЕЛЬНО ПРОВЕРИТЬ ЧТО ТУТ ЗАПИСЫВАЕТСЯ!"!!!!!!
+        claims.put("role", getRoleNames(role));
 
         Date now = new Date();
         Date validity = new Date(now.getTime() + validityInMilliseconds);

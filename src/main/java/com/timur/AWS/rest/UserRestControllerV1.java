@@ -6,7 +6,6 @@ import com.timur.AWS.model.Status;
 import com.timur.AWS.model.User;
 import com.timur.AWS.service.UserService;
 import com.timur.AWS.utils.EntityHelper;
-import org.joda.time.LocalDateTime;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
